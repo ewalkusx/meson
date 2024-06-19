@@ -152,6 +152,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
             subprocess.check_call([genhtml_exe,
                                    '--prefix', build_root,
                                    '--prefix', source_root,
+                                   '--ignore-errors', 'unused',
                                    '--output-directory', htmloutdir,
                                    '--title', 'Code coverage',
                                    '--legend',

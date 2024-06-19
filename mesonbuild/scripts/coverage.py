@@ -132,6 +132,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
             subprocess.check_call([lcov_exe,
                                    '-a', initial_tracefile,
                                    '-a', run_tracefile,
+                                   '--ignore-errors', 'unused',
                                    *lcov_exe_rc_branch_coverage,
                                    '-o', raw_tracefile] + lcov_config)
             # Remove all directories outside the source_root from the covinfo

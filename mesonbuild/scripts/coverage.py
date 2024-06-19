@@ -114,7 +114,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
                                    '--directory', build_root,
                                    '--capture',
                                    '--initial',
-                                   '--ignore-errors', 'inconsistent,mismatch,unused',
+                                   '--ignore-errors', 'inconsistent,mismatch',
                                    '--output-file',
                                    initial_tracefile] +
                                   lcov_config +
@@ -122,7 +122,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
             subprocess.check_call([lcov_exe,
                                    '--directory', build_root,
                                    '--capture',
-                                   '--ignore-errors', 'inconsistent,mismatch,unused',
+                                   '--ignore-errors', 'inconsistent,mismatch',
                                    '--output-file', run_tracefile,
                                    '--no-checksum',
                                    *lcov_exe_rc_branch_coverage] +
@@ -139,6 +139,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
                                    '--extract', raw_tracefile,
                                    os.path.join(source_root, '*'),
                                    *lcov_exe_rc_branch_coverage,
+                                   '--ignore-errors', 'unused',
                                    '--output-file', covinfo] + lcov_config)
             # Remove all directories inside subproject dir
             subprocess.check_call([lcov_exe,

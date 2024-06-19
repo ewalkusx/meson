@@ -114,6 +114,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
                                    '--directory', build_root,
                                    '--capture',
                                    '--initial',
+                                   '--ignore-errors', 'inconsistent',
                                    '--output-file',
                                    initial_tracefile] +
                                   lcov_config +
@@ -143,7 +144,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
                                    '--remove', covinfo,
                                    *lcov_subpoject_exclude,
                                    *lcov_exe_rc_branch_coverage,
-                                   '--ignore-errors', 'inconsistent,mismatch,unused',
+                                   '--ignore-errors', 'unused',
                                    '--output-file', covinfo] + lcov_config)
             subprocess.check_call([genhtml_exe,
                                    '--prefix', build_root,

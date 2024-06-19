@@ -8,7 +8,7 @@ from mesonbuild import environment, mesonlib
 import argparse, re, sys, os, subprocess, pathlib, stat
 import typing as T
 
-def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build_root: str, log_dir: str, use_llvm_cov: bool,
+def coverage(outputs: T.List[str], ignore_errors: str, source_root: str, subproject_root: str, build_root: str, log_dir: str, use_llvm_cov: bool,
              gcovr_exe: str, llvm_cov_exe: str) -> int:
     outfiles = []
     exitcode = 0
@@ -143,7 +143,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
                                    '--remove', covinfo,
                                    *lcov_subpoject_exclude,
                                    *lcov_exe_rc_branch_coverage,
-                                   '--ignore-errors', 'unused',
+                                   '--ignore-errors', ignore_errors,
                                    '--output-file', covinfo] + lcov_config)
             subprocess.check_call([genhtml_exe,
                                    '--prefix', build_root,
@@ -194,6 +194,7 @@ def run(args: T.List[str]) -> int:
                         const='sonarqube', help='generate Sonarqube Xml report')
     parser.add_argument('--html', dest='outputs', action='append_const',
                         const='html', help='generate Html report')
+    parser.add_argument('--ignore-errors', dest='ignore_errors', default='unused')
     parser.add_argument('--use-llvm-cov', action='store_true',
                         help='use llvm-cov')
     parser.add_argument('--gcovr', action='store', default='',
@@ -208,7 +209,8 @@ def run(args: T.List[str]) -> int:
     return coverage(options.outputs, options.source_root,
                     options.subproject_root, options.build_root,
                     options.log_dir, options.use_llvm_cov,
-                    options.gcovr, options.llvm_cov)
+                    options.gcovr, options.llvm_cov,
+                    options.ignore_errors)
 
 if __name__ == '__main__':
     sys.exit(run(sys.argv[1:]))

@@ -122,6 +122,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
             subprocess.check_call([lcov_exe,
                                    '--directory', build_root,
                                    '--capture',
+                                   '--ignore-errors', 'mismatch',
                                    '--output-file', run_tracefile,
                                    '--no-checksum',
                                    *lcov_exe_rc_branch_coverage] +

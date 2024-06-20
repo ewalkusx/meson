@@ -114,7 +114,7 @@ def coverage(outputs: T.List[str], source_root: str, subproject_root: str, build
                                    '--directory', build_root,
                                    '--capture',
                                    '--initial',
-                                   '--ignore-errors', 'inconsistent,mismatch',
+                                   '--ignore-errors', 'mismatch',
                                    '--output-file',
                                    initial_tracefile] +
                                   lcov_config +
